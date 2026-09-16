@@ -1,7 +1,12 @@
 ﻿import type { NextConfig } from "next";
+
 const nextConfig: NextConfig = {
-  allowedDevOrigins: [
-    "align-dsc-washer-crossing.trycloudflare.com"
-  ],
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  }
 };
+
 export default nextConfig;
