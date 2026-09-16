@@ -7,24 +7,31 @@ export async function POST(req: Request) {
     const { data, password } = await req.json();
     if (password !== "admin1234") return NextResponse.json({error: "Unauthorized"}, {status: 401});
     
-    await getDb().product.deleteMany(); // Clear old products
+    const db = getDb();
     
-    const formatted = data.map((item: any) => {
+    // Clear old products
+    await db.product.deleteMany(); 
+    
+    let count = 0;
+    for (const item of data) {
       const imageNo = String(item["image no."] || item.imageNo || "");
-      return {
-        imageNo: imageNo,
-        amos: String(item.Amos || item.amos || ""),
-        name: String(item.product_name || item.name || ""),
-        price: Number(item.price || 0),
-        imageUrl: `/images/${imageNo}.jpg`
-      };
-    });
+      if (!imageNo) continue;
+      
+      await db.product.create({
+        data: {
+          imageNo: imageNo,
+          amos: String(item.Amos || item.amos || ""),
+          name: String(item.product_name || item.name || ""),
+          price: Number(item.price || 0),
+          imageUrl: "/images/" + imageNo + ".jpg"
+        }
+      });
+      count++;
+    }
     
-    await getDb().product.createMany({ data: formatted });
-    return NextResponse.json({ success: true, count: formatted.length });
-  } catch (e) {
+    return NextResponse.json({ success: true, count });
+  } catch (e: any) {
     console.error(e);
-    return NextResponse.json({error: "Server Error"}, {status: 500});
+    return NextResponse.json({error: "Server Error", details: e.message}, {status: 500});
   }
 }
-
