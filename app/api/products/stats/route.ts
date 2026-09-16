@@ -1,11 +1,13 @@
-﻿import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+export const runtime = 'edge';
+import { NextResponse } from "next/server";
+import { getDb } from "@/lib/db";
 
-const prisma = new PrismaClient();
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const count = await prisma.product.count();
+    const db = getDb();
+    const count = await db.product.count();
     return NextResponse.json({ count });
   } catch (e) {
     return NextResponse.json({ count: 0 });
