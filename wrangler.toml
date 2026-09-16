@@ -1,0 +1,8 @@
+﻿name = "seminar-web-game"
+compatibility_date = "2024-03-20"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "sbp_saminar"
+database_id = "3b1aa41a-e9ce-4a95-991d-5995a4d8a804"

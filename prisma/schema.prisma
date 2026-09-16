@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Player {
+  id           Int      @id @default(autoincrement())
+  nameOrPhone  String   @unique
+  startTime    DateTime @default(now())
+  endTime      DateTime?
+  correctCount Int      @default(0)
+  status       String   @default("PLAYING")
+}
+
+model Product {
+  id           Int      @id @default(autoincrement())
+  imageNo      String   @unique
+  amos         String?
+  name         String
+  price        Float
+  imageUrl     String
+}
