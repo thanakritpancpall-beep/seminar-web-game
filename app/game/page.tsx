@@ -156,7 +156,15 @@ function GameContent() {
       <div className="w-full max-w-md bg-white p-6 rounded-2xl shadow-xl mt-4 border border-gray-200">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-lg font-bold text-[#005690]">👤 {playerName}</h2>
-          <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-bold text-sm">
+          <div 
+            className="flex flex-col items-center justify-center cursor-pointer hover:opacity-80 transition" 
+            onClick={() => window.open('https://allonline.link/r/Q9XDE', '_blank')}
+          >
+             {/* eslint-disable-next-line @next/next/no-img-element */}
+             <img src="/images/all-online-logo.png" alt="ALL ONLINE" className="h-8 object-contain mb-1" />
+             <span className="text-[10px] text-[#005690] font-bold leading-tight">กดที่โลโก้ เพื่อไปหน้า</span>
+          </div>
+          <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-bold text-sm whitespace-nowrap">
             ถูก {correctCount}/5
           </span>
         </div>
@@ -173,7 +181,7 @@ function GameContent() {
             <div>
               <h3 className="text-md font-semibold text-gray-800 line-clamp-2 min-h-[1.5rem] mt-3">{product?.name}</h3>
               {product?.amos && (
-                <p className="text-sm font-medium text-gray-500 mt-1">รหัสสินค้า (Amos): {product.amos}</p>
+                <p className="text-sm font-medium text-gray-500 mt-1">รหัสสินค้า: {product.amos}</p>
               )}
             </div>
             
@@ -222,3 +230,4 @@ export default function Game() {
     </Suspense>
   );
 }
+
