@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState, useEffect } from "react";
 import * as XLSX from "xlsx";
 
@@ -59,7 +59,7 @@ export default function Admin() {
         });
         if(res.ok) {
           const result = await res.json();
-          alert(อัปโหลดสำเร็จ! (ทั้งหมด  + result.count +  รายการ));
+          alert("อัปโหลดสำเร็จ! (ทั้งหมด " + result.count + " รายการ)");
           fetchStats();
         } else {
           const errorData = await res.json().catch(()=>({})); alert("เกิดข้อผิดพลาด (เซิร์ฟเวอร์): " + (errorData.details || errorData.error || res.statusText));
