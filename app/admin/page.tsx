@@ -6,6 +6,7 @@ export default function Admin() {
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [resetLoading, setResetLoading] = useState(false);
   const [productCount, setProductCount] = useState<number | null>(null);
 
   const fetchStats = async () => {
@@ -58,7 +59,7 @@ export default function Admin() {
         });
         if(res.ok) {
           const result = await res.json();
-          alert(`อัปโหลดข้อมูลสินค้าสำเร็จ! (นำเข้า ${result.count} รายการ)`);
+          alert(อัปโหลดสำเร็จ! (ทั้งหมด  + result.count +  รายการ));
           fetchStats();
         } else {
           alert("เกิดข้อผิดพลาดในการอัปโหลด โปรดลองใหม่");
@@ -70,6 +71,27 @@ export default function Admin() {
       e.target.value = null;
     };
     reader.readAsBinaryString(file);
+  }
+
+  const handleResetPlayers = async () => {
+    if (!confirm("⚠️ คุณแน่ใจหรือไม่ว่าต้องการล้างข้อมูลผู้เล่นและคะแนนทั้งหมด? (ข้อมูลจะถูกลบและไม่สามารถกู้คืนได้)")) return;
+    
+    setResetLoading(true);
+    try {
+      const res = await fetch("/api/player/reset", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password })
+      });
+      if (res.ok) {
+        alert("ล้างข้อมูลผู้เล่นทั้งหมดเรียบร้อยแล้ว!");
+      } else {
+        alert("เกิดข้อผิดพลาดในการล้างข้อมูล");
+      }
+    } catch(e) {
+      alert("เกิดข้อผิดพลาดในการล้างข้อมูล");
+    }
+    setResetLoading(false);
   }
 
   return (
@@ -87,11 +109,23 @@ export default function Admin() {
           </div>
         </div>
 
-        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
+        <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200 mb-6">
           <h2 className="text-xl font-semibold mb-2 text-gray-700">1. อัปเดตข้อมูลสินค้า (Excel)</h2>
           <p className="mb-6 text-gray-500 text-sm">การอัปโหลดใหม่จะลบข้อมูลเก่าทิ้งทั้งหมด กรุณาเตรียมไฟล์ที่มีคอลัมน์: image no. | Amos | product_name | price</p>
           <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} disabled={loading} className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 mb-4 cursor-pointer" />
           {loading && <p className="text-blue-600 font-semibold animate-pulse">กำลังแปลงไฟล์และบันทึกลงฐานข้อมูล...</p>}
+        </div>
+
+        <div className="bg-white p-8 rounded-xl shadow-sm border border-red-200">
+          <h2 className="text-xl font-semibold mb-2 text-red-700">2. ล้างข้อมูลผู้เล่น (Reset Game)</h2>
+          <p className="mb-6 text-gray-500 text-sm">ใช้สำหรับเคลียร์คะแนนและรายชื่อผู้เล่นทั้งหมด เพื่อเตรียมพร้อมสำหรับงานสัมมนารอบใหม่</p>
+          <button 
+            onClick={handleResetPlayers} 
+            disabled={resetLoading} 
+            className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors disabled:opacity-50"
+          >
+            {resetLoading ? "กำลังล้างข้อมูล..." : "🗑️ ล้างข้อมูลผู้เล่นทั้งหมด"}
+          </button>
         </div>
       </div>
     </div>
