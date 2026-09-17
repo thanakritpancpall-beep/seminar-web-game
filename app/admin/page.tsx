@@ -62,7 +62,7 @@ export default function Admin() {
           alert(อัปโหลดสำเร็จ! (ทั้งหมด  + result.count +  รายการ));
           fetchStats();
         } else {
-          alert("เกิดข้อผิดพลาดในการอัปโหลด โปรดลองใหม่");
+          alert("เกิดข้อผิดพลาด: " + (result.details || result.error || "โปรดลองใหม่"));
         }
       } catch(err) {
         alert("เกิดข้อผิดพลาดในการอ่านไฟล์ Excel");
@@ -131,3 +131,4 @@ export default function Admin() {
     </div>
   )
 }
+
