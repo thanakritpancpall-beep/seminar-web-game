@@ -62,7 +62,7 @@ export default function Admin() {
           alert(อัปโหลดสำเร็จ! (ทั้งหมด  + result.count +  รายการ));
           fetchStats();
         } else {
-          alert("เกิดข้อผิดพลาด: " + (result.details || result.error || "โปรดลองใหม่"));
+          const errorData = await res.json().catch(()=>({})); alert("เกิดข้อผิดพลาด (เซิร์ฟเวอร์): " + (errorData.details || errorData.error || res.statusText));
         }
       } catch(err) {
         alert("เกิดข้อผิดพลาดในการอ่านไฟล์ Excel");
@@ -131,4 +131,5 @@ export default function Admin() {
     </div>
   )
 }
+
 
