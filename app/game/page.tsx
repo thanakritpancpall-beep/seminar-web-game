@@ -17,6 +17,7 @@ function GameContent() {
   const [feedback, setFeedback] = useState<{text: string, type: "error"|"success"} | null>(null);
   const [seenIds, setSeenIds] = useState<number[]>([]);
   const [initError, setInitError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const fetchQuestion = async (pid: string, currentSeen: number[], pName: string) => {
     setLoading(true);
@@ -161,7 +162,7 @@ function GameContent() {
             onClick={() => window.open('https://allonline.link/r/Q9XDE', '_blank')}
           >
              {/* eslint-disable-next-line @next/next/no-img-element */}
-             <img src="/images/all-online-logo.png" alt="ALL ONLINE" className="h-8 object-contain mb-1" />
+             <img src="/images/all-online-logo.png" alt="ALL ONLINE" className="h-14 object-contain mb-1" />
              <span className="text-[10px] text-[#005690] font-bold leading-tight">กดที่โลโก้ เพื่อไปหน้า</span>
           </div>
           <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-bold text-sm whitespace-nowrap">
@@ -181,7 +182,19 @@ function GameContent() {
             <div>
               <h3 className="text-md font-semibold text-gray-800 line-clamp-2 min-h-[1.5rem] mt-3">{product?.name}</h3>
               {product?.amos && (
-                <p className="text-sm font-medium text-gray-500 mt-1">รหัสสินค้า: {product.amos}</p>
+                <div className="flex items-center justify-center gap-2 mt-1">
+                  <p className="text-sm font-medium text-gray-500">รหัสสินค้า: {product.amos}</p>
+                  <button 
+                    onClick={() => {
+                      navigator.clipboard.writeText(product.amos);
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 2000);
+                    }}
+                    className="bg-gray-100 hover:bg-gray-200 text-gray-600 px-2 py-0.5 rounded text-xs transition-colors"
+                  >
+                    {copied ? <span className="text-green-600 font-bold">Copy!</span> : "📋 Copy"}
+                  </button>
+                </div>
               )}
             </div>
             
@@ -230,4 +243,5 @@ export default function Game() {
     </Suspense>
   );
 }
+
 
