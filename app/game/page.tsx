@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -95,7 +95,7 @@ function GameContent() {
       if (res.ok) {
         const data = await res.json();
         if (data.correct) {
-          if (data.player.correctCount >= 5) {
+          if (data.player.correctCount >= 3) {
             router.push(`/success?pname=${encodeURIComponent(playerName)}`);
           } else {
             fetchQuestion(playerId, seenIds, playerName);
@@ -166,7 +166,7 @@ function GameContent() {
              <span className="text-[10px] text-[#005690] font-bold leading-tight">กดที่โลโก้ เพื่อไปหน้า</span>
           </div>
           <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-bold text-sm whitespace-nowrap">
-            ถูก {correctCount}/5
+            ถูก {correctCount}/3
           </span>
         </div>
         

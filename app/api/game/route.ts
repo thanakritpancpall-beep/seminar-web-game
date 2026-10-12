@@ -1,4 +1,4 @@
-﻿export const runtime = 'edge';
+export const runtime = 'edge';
 import { NextResponse } from "next/server";
 import { getDb } from "@/lib/db";
 export const dynamic = "force-dynamic";
@@ -53,7 +53,7 @@ export async function POST(req: Request) {
         data: { correctCount: player.correctCount + 1 }
       });
       
-      if (player.correctCount >= 5) {
+      if (player.correctCount >= 3) {
         await getDb().player.update({
           where: { id: player.id },
           data: { status: "FINISHED", endTime: new Date() }

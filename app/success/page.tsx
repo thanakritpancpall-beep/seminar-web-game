@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
@@ -20,7 +20,7 @@ function SuccessContent() {
           ยินดีด้วย!
         </h1>
         <p className="text-gray-600 font-medium mb-6">
-          {playerName} ตอบถูกครบ 5 ข้อแล้ว
+          {playerName} ตอบถูกครบ 3 ข้อแล้ว
         </p>
         
         <div className="bg-gray-100 p-6 rounded-xl border-2 border-dashed border-gray-300 mb-6">

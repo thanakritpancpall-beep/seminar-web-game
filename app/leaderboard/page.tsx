@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useEffect, useState } from "react";
 
 export default function Leaderboard() {
@@ -38,7 +38,7 @@ export default function Leaderboard() {
         <h1 className="text-4xl font-black text-center text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-600 mb-2">
           🏆 LEADERBOARD 🏆
         </h1>
-        <p className="text-center text-slate-400 mb-10">ทำเนียบคนเก่งที่ตอบถูก 5 ข้อเร็วที่สุด</p>
+        <p className="text-center text-slate-400 mb-10">ทำเนียบคนเก่งที่ตอบถูก 3 ข้อเร็วที่สุด</p>
 
         {loading && leaders.length === 0 ? (
           <div className="text-center py-20 text-slate-500 animate-pulse">กำลังโหลดข้อมูล...</div>
